@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Edit Exam</h2>
+  <form method="post" class="grid">
+    <div class="grid grid-2">
+      <input name="title" value="{{ exam.title }}" required>
+      <input name="subject" value="{{ exam.subject }}">
+    </div>
+    <div class="grid grid-2">
+      <input name="student_class" value="{{ exam.student_class }}">
+      <input name="section" value="{{ exam.section }}">
+    </div>
+    <div class="grid grid-2">
+      <input type="number" name="duration_minutes" value="{{ exam.duration_minutes }}">
+      <input type="number" step="0.25" name="negative_marks" value="{{ exam.negative_marks }}">
+    </div>
+    <div class="grid grid-2">
+      <input type="number" step="0.5" name="pass_marks" value="{{ exam.pass_marks }}">
+      <textarea name="instructions">{{ exam.instructions }}</textarea>
+    </div>
+    <label><input type="checkbox" name="is_active" value="1" {{ 'checked' if exam.is_active else '' }}> Active</label>
+    <div class="card" style="max-height:320px;overflow:auto">
+      {% for q in questions %}
+      <label class="option"><input type="checkbox" name="question_ids" value="{{ q.id }}" {{ 'checked' if q.id in chosen else '' }}> {{ q.question }}</label>
+      {% endfor %}
+    </div>
+    <button type="submit">Update Exam</button>
+  </form>
+</div>
+{% endblock %}

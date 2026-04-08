@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>{{ T.result_card }}</h2>
+  <p><b>Student:</b> {{ row.student_name }} ({{ row.roll_no }})</p>
+  <p><b>Exam:</b> {{ row.exam_title }}</p>
+  <p><b>Score:</b> {{ row.score }} / {{ row.total_marks }}</p>
+  <p><b>Status:</b> <span class="badge">{{ 'PASS' if row.score >= row.pass_marks else 'FAIL' }}</span></p>
+  <div class="top-actions">
+    <a class="btn" href="{{ url_for('student_result_pdf', rid=row.id) }}">Download PDF</a>
+    <a class="btn secondary" href="{{ url_for('student_dashboard') }}">Back</a>
+  </div>
+</div>
+{% endblock %}

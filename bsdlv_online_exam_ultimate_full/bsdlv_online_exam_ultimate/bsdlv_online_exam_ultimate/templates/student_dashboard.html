@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>{{ T.welcome }}, {{ student.name }}</h2>
+  <p class="muted">ID: {{ student.student_id }} | Class: {{ student.student_class }} | Section: {{ student.section }}</p>
+  {% if student.photo %}<img src="{{ url_for('static', filename='uploads/' + student.photo) }}" style="height:90px;border-radius:16px">{% endif %}
+</div>
+<div class="card">
+  <h2>Assigned Exams / दी गई परीक्षाएँ</h2>
+  <table>
+    <tr><th>Exam</th><th>Instructions</th><th>Action</th></tr>
+    {% for e in exams %}
+    <tr>
+      <td>{{ e.title }}<div class="small muted">{{ e.subject }} | {{ e.duration_minutes }} min</div></td>
+      <td>{{ e.instructions or 'No instructions' }}</td>
+      <td>
+        {% if done.get(e.id) %}
+          <a class="btn success" href="{{ url_for('student_result', rid=done.get(e.id).id) }}">View Result</a>
+        {% else %}
+          <a class="btn" href="{{ url_for('exam_instructions', eid=e.id) }}">Open</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
