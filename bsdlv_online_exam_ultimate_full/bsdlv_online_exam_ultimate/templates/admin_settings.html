@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Settings / सेटिंग्स</h2>
+  <form method="post" enctype="multipart/form-data" class="grid grid-2">
+    <div><label>Site Title</label><input name="site_title" value="{{ site_title }}"></div>
+    <div><label>Logo Upload</label><input type="file" name="logo" accept="image/*"></div>
+    <div><label>New Admin Password</label><input type="password" name="new_password" placeholder="Leave blank to keep same"></div>
+    <div style="display:flex;align-items:end"><button type="submit">Save Settings</button></div>
+  </form>
+</div>
+{% endblock %}

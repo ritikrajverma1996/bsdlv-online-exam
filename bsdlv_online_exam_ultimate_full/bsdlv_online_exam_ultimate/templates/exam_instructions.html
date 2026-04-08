@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>{{ exam.title }}</h2>
+  <p><b>{{ T.instructions }} / Instructions</b></p>
+  <p style="white-space:pre-wrap">{{ exam.instructions or "Read each question carefully. Timer will auto submit the exam when time ends." }}</p>
+  <ul>
+    <li>Duration: {{ exam.duration_minutes }} minutes</li>
+    <li>Negative marking: {{ exam.negative_marks }}</li>
+    <li>One attempt only</li>
+    <li>Auto submit on timeout</li>
+  </ul>
+  <a class="btn" href="{{ url_for('start_exam', eid=exam.id) }}">{{ T.start_exam }}</a>
+</div>
+{% endblock %}

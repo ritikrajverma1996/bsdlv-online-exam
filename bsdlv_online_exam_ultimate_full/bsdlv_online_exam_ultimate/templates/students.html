@@ -1,0 +1,41 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid grid-2">
+  <div class="card">
+    <h2>Add Student</h2>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('add_student') }}" class="grid">
+      <input name="student_id" placeholder="Student ID" required>
+      <input name="name" placeholder="Student Name" required>
+      <div class="grid grid-2">
+        <input name="student_class" placeholder="Class">
+        <input name="section" placeholder="Section">
+      </div>
+      <input name="password" placeholder="Password" required>
+      <input type="file" name="photo" accept="image/*">
+      <button type="submit">Add Student</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Import Students from Excel</h2>
+    <p class="small">Headers: student_id, name, student_class, section, password</p>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('import_students') }}" class="grid">
+      <input type="file" name="file" accept=".xlsx" required>
+      <button type="submit">Import Excel</button>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <h2>Student List</h2>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Photo</th><th>Action</th></tr>
+    {% for s in students %}
+    <tr>
+      <td>{{ s.student_id }}</td><td>{{ s.name }}</td><td>{{ s.student_class }}</td><td>{{ s.section }}</td>
+      <td>{% if s.photo %}<img src="{{ url_for('static', filename='uploads/' + s.photo) }}" style="height:50px;border-radius:8px">{% endif %}</td>
+      <td><a class="btn danger small" href="{{ url_for('delete_student', student_id=s.id) }}" onclick="return confirm('Delete?')">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Admit Card / प्रवेश पत्र</h2>
+  <p><b>Name:</b> {{ student.name }}</p>
+  <p><b>Student ID:</b> {{ student.student_id }}</p>
+  <p><b>Class:</b> {{ student.student_class }} | <b>Section:</b> {{ student.section }}</p>
+  {% if student.photo %}<img src="{{ url_for('static', filename='uploads/' + student.photo) }}" style="height:110px;border-radius:12px">{% endif %}
+  <h3>Assigned Exams</h3>
+  <ul>{% for e in exams %}<li>{{ e.title }} - {{ e.subject }} - {{ e.duration_minutes }} min</li>{% endfor %}</ul>
+  <a class="btn" href="{{ url_for('student_admit_card_pdf') }}">Download PDF</a>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card hero">
+  <div>
+    <span class="badge">Online + Bilingual</span>
+    <h1>{{ site_title }}</h1>
+    <p>
+      A modern online exam portal with Admin login, Student login, Excel import, class-wise exam assignment,
+      bilingual interface, timer, auto submit, result card PDF, admit card PDF, logo upload, and mobile-friendly layout.
+    </p>
+    <div class="top-actions">
+      <a class="btn" href="{{ url_for('admin_login') }}">{{ T.admin_login }}</a>
+      <a class="btn success" href="{{ url_for('student_login') }}">{{ T.student_login }}</a>
+    </div>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#dbeafe,#ffedd5)">
+    <h3>Features / सुविधाएँ</h3>
+    <ul>
+      <li>Excel import for students and questions</li>
+      <li>Question edit/delete</li>
+      <li>Exam create/edit/delete + manual picker</li>
+      <li>Instructions page + timer</li>
+      <li>One student one attempt</li>
+      <li>Printable admit card and result card PDF</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

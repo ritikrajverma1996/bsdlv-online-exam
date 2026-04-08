@@ -1,0 +1,81 @@
+
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ site_title }}</title>
+  <style>
+    :root{
+      --bg:#0f172a; --card:#ffffff; --text:#0f172a; --muted:#64748b; --primary:#2563eb; --accent:#f59e0b;
+      --soft:#e2e8f0; --softbg:#f8fafc; --danger:#dc2626; --success:#16a34a;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#fff7ed);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    .nav{background:linear-gradient(90deg,#0f172a,#1d4ed8);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem}
+    .brand img{height:42px;width:42px;object-fit:cover;border-radius:10px;background:#fff}
+    .wrap{max-width:1200px;margin:24px auto;padding:0 16px}
+    .card{background:var(--card);border-radius:18px;box-shadow:0 10px 25px rgba(2,6,23,.08);padding:18px;margin-bottom:18px}
+    .grid{display:grid;gap:16px}.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    input,select,textarea,button{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:12px;font:inherit}
+    textarea{min-height:96px}
+    button,.btn{display:inline-block;background:var(--primary);color:#fff;border:none;cursor:pointer;padding:10px 14px;border-radius:12px;width:auto}
+    .btn.secondary{background:#475569}.btn.warn{background:var(--accent);color:#111827}.btn.danger{background:var(--danger)} .btn.success{background:var(--success)}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    table{width:100%;border-collapse:collapse;font-size:.95rem} th,td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top}
+    th{background:#f8fafc} .muted{color:var(--muted)} .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:.85rem}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    .stat{background:linear-gradient(135deg,#fff,#f8fafc);padding:18px;border-radius:18px;border:1px solid #e2e8f0}
+    .flash{padding:12px;border-radius:12px;background:#ecfeff;border:1px solid #a5f3fc;margin-bottom:12px}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+    .hero h1{font-size:2rem;margin:.2rem 0}
+    .hero p{color:#475569;line-height:1.6}
+    .lang a{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.14);color:#fff}
+    .lang a.active{background:#fff;color:#1d4ed8;font-weight:700}
+    .small{font-size:.88rem}
+    @media (max-width:800px){.hero{grid-template-columns:1fr} .nav{padding:12px}}
+    .question-box{padding:14px;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:14px}
+    .option{display:block;padding:10px;border:1px solid #cbd5e1;border-radius:10px;margin:8px 0}
+    .option input{width:auto;margin-right:8px}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand">
+      {% if logo_file %}<img src="{{ url_for('static', filename='uploads/' + logo_file) }}" alt="logo">{% endif %}
+      <div>{{ site_title }}</div>
+    </div>
+    <div class="top-actions">
+      <div class="lang">
+        <a class="{{ 'active' if lang=='en' else '' }}" href="{{ url_for('switch_language', lang_code='en') }}">English</a>
+        <a class="{{ 'active' if lang=='hi' else '' }}" href="{{ url_for('switch_language', lang_code='hi') }}">हिंदी</a>
+      </div>
+      {% if session.get('admin_id') %}
+        <a class="btn secondary" href="{{ url_for('admin_dashboard') }}">{{ T.dashboard }}</a>
+        <a class="btn secondary" href="{{ url_for('admin_students') }}">{{ T.students }}</a>
+        <a class="btn secondary" href="{{ url_for('admin_questions') }}">{{ T.questions }}</a>
+        <a class="btn secondary" href="{{ url_for('admin_exams') }}">{{ T.exams }}</a>
+        <a class="btn secondary" href="{{ url_for('admin_results') }}">{{ T.results }}</a>
+        <a class="btn warn" href="{{ url_for('admin_settings') }}">Settings</a>
+        <a class="btn danger" href="{{ url_for('logout') }}">{{ T.logout }}</a>
+      {% elif session.get('student_id') %}
+        <a class="btn secondary" href="{{ url_for('student_dashboard') }}">{{ T.dashboard }}</a>
+        <a class="btn secondary" href="{{ url_for('student_admit_card') }}">{{ T.admit_card }}</a>
+        <a class="btn danger" href="{{ url_for('logout') }}">{{ T.logout }}</a>
+      {% else %}
+        <a class="btn secondary" href="{{ url_for('admin_login') }}">{{ T.admin_login }}</a>
+        <a class="btn success" href="{{ url_for('student_login') }}">{{ T.student_login }}</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="wrap">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

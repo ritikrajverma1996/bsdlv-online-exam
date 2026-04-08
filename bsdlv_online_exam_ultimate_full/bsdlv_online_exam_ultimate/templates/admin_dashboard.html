@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>{{ T.dashboard }}</h2>
+  <div class="stats">
+    <div class="stat"><div class="muted">Students</div><div style="font-size:2rem;font-weight:700">{{ stats.students }}</div></div>
+    <div class="stat"><div class="muted">Questions</div><div style="font-size:2rem;font-weight:700">{{ stats.questions }}</div></div>
+    <div class="stat"><div class="muted">Exams</div><div style="font-size:2rem;font-weight:700">{{ stats.exams }}</div></div>
+    <div class="stat"><div class="muted">Results</div><div style="font-size:2rem;font-weight:700">{{ stats.results }}</div></div>
+  </div>
+</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Quick Links</h3>
+    <div class="top-actions">
+      <a class="btn" href="{{ url_for('admin_students') }}">Students</a>
+      <a class="btn" href="{{ url_for('admin_questions') }}">Questions</a>
+      <a class="btn" href="{{ url_for('admin_exams') }}">Exams</a>
+      <a class="btn" href="{{ url_for('admin_results') }}">Results</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Default Admin</h3>
+    <p class="small">Username: <b>admin</b><br>Password: <b>admin123</b></p>
+  </div>
+</div>
+{% endblock %}
